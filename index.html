@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bones · Seguimiento Diario AIDAP</title>
+<style>
+  :root{
+    --verde-oscuro:#0f3d2e;
+    --verde-medio:#155c42;
+    --verde-claro:#2e8b57;
+    --hueso:#f4efe6;
+    --hueso-suave:#e9e2d3;
+    --dorado:#c9a45c;
+    --texto:#1b2b23;
+    --texto-suave:#5c6b63;
+    --sombra:0 10px 30px rgba(15,61,46,0.15);
+    --radio:16px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    background:linear-gradient(180deg,var(--hueso) 0%, var(--hueso-suave) 100%);
+    color:var(--texto);
+    padding-bottom:60px;
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    background:radial-gradient(circle at top left, var(--verde-medio), var(--verde-oscuro) 70%);
+    color:var(--hueso);
+    padding:36px 20px 44px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  header::after{
+    content:"";
+    position:absolute;
+    bottom:-40px; left:50%;
+    width:140%;
+    height:80px;
+    background:var(--hueso);
+    border-radius:50%;
+    transform:translateX(-50%);
+  }
+  .logo{
+    width:74px; height:74px;
+    border-radius:50%;
+    background:var(--hueso);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 14px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.25);
+    font-size:34px;
+  }
+  header h1{
+    margin:0;
+    font-size:26px;
+    letter-spacing:3px;
+    font-weight:700;
+  }
+  header p.sub{
+    margin:6px 0 0;
+    font-size:13px;
+    letter-spacing:1px;
+    opacity:0.85;
+    text-transform:uppercase;
+  }
+  header .frase{
+    margin-top:16px;
+    font-size:13px;
+    font-style:italic;
+    opacity:0.9;
+    max-width:420px;
+    margin-left:auto;margin-right:auto;
+  }
+
+  main{
+    max-width:640px;
+    margin:0 auto;
+    padding:0 18px;
+    position:relative;
+    z-index:2;
+  }
+
+  .card{
+    background:#fff;
+    border-radius:var(--radio);
+    box-shadow:var(--sombra);
+    padding:22px 20px;
+    margin-bottom:20px;
+  }
+
+  /* Secciones AIDAP */
+  .paso{
+    border-left:5px solid var(--verde-claro);
+  }
+  .paso-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:6px;
+  }
+  .letra{
+    width:38px;height:38px;
+    border-radius:50%;
+    background:var(--verde-oscuro);
+    color:var(--hueso);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;
+    font-size:16px;
+    flex-shrink:0;
+  }
+  .paso h2{
+    margin:0;
+    font-size:17px;
+    color:var(--verde-oscuro);
+    flex:1;
+  }
+  .btn-significado{
+    background:var(--hueso);
+    border:1px solid var(--hueso-suave);
+    color:var(--verde-oscuro);
+    font-size:12px;
+    font-weight:600;
+    padding:7px 12px;
+    border-radius:20px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:all .15s;
+  }
+  .btn-significado:hover{
+    background:var(--verde-oscuro);
+    color:var(--hueso);
+  }
+  .paso p.pregunta{
+    margin:2px 0 18px 50px;
+    font-size:13px;
+    color:var(--texto-suave);
+  }
+  .kpi-list{
+    list-style:none;
+    padding:0;
+    margin:0 0 16px 0;
+  }
+  .kpi-item{
+    margin-bottom:20px;
+  }
+  .kpi-item-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:8px;
+    gap:10px;
+  }
+  .kpi-item-head span.kpi-nombre{
+    font-size:14px;
+  }
+  .kpi-item-head span.kpi-nombre.clave{
+    color:var(--dorado);
+    font-weight:600;
+  }
+  .kpi-valor{
+    font-size:15px;
+    font-weight:700;
+    color:var(--verde-oscuro);
+    min-width:38px;
+    text-align:right;
+    flex-shrink:0;
+  }
+  input[type=range]{
+    -webkit-appearance:none;
+    appearance:none;
+    width:100%;
+    height:8px;
+    border-radius:10px;
+    background:var(--hueso-suave);
+    outline:none;
+    cursor:pointer;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    appearance:none;
+    width:24px;height:24px;
+    border-radius:50%;
+    background:var(--verde-claro);
+    border:3px solid #fff;
+    box-shadow:0 2px 6px rgba(15,61,46,0.4);
+    cursor:pointer;
+    margin-top:-8px;
+  }
+  input[type=range]::-moz-range-thumb{
+    width:24px;height:24px;
+    border-radius:50%;
+    background:var(--verde-claro);
+    border:3px solid #fff;
+    box-shadow:0 2px 6px rgba(15,61,46,0.4);
+    cursor:pointer;
+  }
+  input[type=range]::-webkit-slider-runnable-track{
+    height:8px;
+    border-radius:10px;
+    background:var(--hueso-suave);
+  }
+  input[type=range]::-moz-range-track{
+    height:8px;
+    border-radius:10px;
+    background:var(--hueso-suave);
+  }
+  .escala{
+    display:flex;
+    justify-content:space-between;
+    font-size:10px;
+    color:var(--texto-suave);
+    margin-top:4px;
+  }
+
+  .mejora-wrap{
+    margin:6px 0 18px 50px;
+  }
+  .mejora-wrap label{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    color:var(--verde-oscuro);
+    margin-bottom:6px;
+  }
+  .mejora-wrap textarea{
+    width:100%;
+    border:1px solid #dcd3c2;
+    border-radius:10px;
+    padding:10px;
+    font-family:inherit;
+    font-size:13px;
+    resize:vertical;
+    min-height:50px;
+    background:var(--hueso);
+  }
+
+  .barra-wrap{
+    margin-left:50px;
+    margin-top:8px;
+  }
+  .barra-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:12px;
+    color:var(--texto-suave);
+    margin-bottom:6px;
+  }
+  .barra-label strong{color:var(--verde-oscuro);font-size:14px;}
+  .barra-bg{
+    background:var(--hueso-suave);
+    border-radius:20px;
+    height:12px;
+    overflow:hidden;
+  }
+  .barra-fill{
+    height:100%;
+    background:linear-gradient(90deg,var(--verde-claro),var(--verde-oscuro));
+    border-radius:20px;
+    width:0%;
+    transition:width .3s ease;
+  }
+
+  /* Indicadores del día */
+  .indicadores h2, .resultado h2{
+    color:var(--verde-oscuro);
+    font-size:17px;
+    margin-top:0;
+  }
+  .grid-indicadores{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .campo{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .campo label{
+    font-size:12px;
+    color:var(--texto-suave);
+    font-weight:600;
+  }
+  .campo input, .campo select{
+    border:1px solid #dcd3c2;
+    border-radius:10px;
+    padding:10px;
+    font-size:14px;
+    background:var(--hueso);
+    font-family:inherit;
+  }
+  .conversion-box{
+    margin-top:14px;
+    background:var(--hueso);
+    border-radius:10px;
+    padding:12px 14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:14px;
+  }
+  .conversion-box strong{
+    color:var(--verde-oscuro);
+    font-size:18px;
+  }
+  .venta-cruzada-toggle{
+    margin-top:14px;
+    display:flex;
+    gap:10px;
+  }
+  .venta-cruzada-toggle button{
+    flex:1;
+    padding:10px;
+    border-radius:10px;
+    border:1px solid #dcd3c2;
+    background:var(--hueso);
+    font-family:inherit;
+    font-size:13px;
+    cursor:pointer;
+    transition:all .15s;
+  }
+  .venta-cruzada-toggle button.activo{
+    background:var(--verde-oscuro);
+    color:var(--hueso);
+    border-color:var(--verde-oscuro);
+  }
+
+  /* Resultado general */
+  .resultado{
+    background:linear-gradient(160deg,var(--verde-oscuro),var(--verde-medio));
+    color:var(--hueso);
+  }
+  .resultado h2{color:var(--hueso);}
+  .tarjetas{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-bottom:18px;
+  }
+  .tarjeta{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:12px;
+    padding:14px;
+    text-align:center;
+  }
+  .tarjeta .pct{
+    font-size:24px;
+    font-weight:700;
+    color:var(--dorado);
+  }
+  .tarjeta .nombre{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    opacity:0.85;
+    margin-top:4px;
+  }
+  .experiencia-total{
+    text-align:center;
+    background:rgba(255,255,255,0.1);
+    border-radius:16px;
+    padding:24px;
+    border:1px solid rgba(255,255,255,0.2);
+  }
+  .experiencia-total .titulo{
+    font-size:13px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    opacity:0.85;
+    margin-bottom:8px;
+  }
+  .experiencia-total .num{
+    font-size:52px;
+    font-weight:800;
+    color:var(--dorado);
+    line-height:1;
+  }
+
+  /* Botón WhatsApp */
+  .enviar-wrap{
+    max-width:640px;
+    margin:26px auto 0;
+    padding:0 18px;
+  }
+  .btn-whatsapp{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    width:100%;
+    background:#1f9e56;
+    color:#fff;
+    border:none;
+    padding:16px;
+    font-size:16px;
+    font-weight:700;
+    border-radius:14px;
+    cursor:pointer;
+    box-shadow:0 8px 22px rgba(31,158,86,0.4);
+    transition:transform .15s;
+  }
+  .btn-whatsapp:hover{transform:translateY(-2px);}
+  .btn-whatsapp svg{width:22px;height:22px;fill:#fff;}
+
+  /* Botones de metodología */
+  .metodologia-wrap{
+    max-width:640px;
+    margin:14px auto 0;
+    padding:0 18px;
+    display:flex;
+    gap:10px;
+  }
+  .btn-metodo{
+    flex:1;
+    background:#fff;
+    border:1px solid var(--hueso-suave);
+    color:var(--verde-oscuro);
+    padding:12px 8px;
+    font-size:12px;
+    font-weight:700;
+    border-radius:12px;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(15,61,46,0.08);
+    transition:all .15s;
+    text-align:center;
+  }
+  .btn-metodo:hover{
+    background:var(--verde-oscuro);
+    color:var(--hueso);
+    transform:translateY(-2px);
+  }
+
+  footer{
+    text-align:center;
+    font-size:12px;
+    color:var(--texto-suave);
+    margin-top:30px;
+    padding:0 20px;
+  }
+
+  /* Modal */
+  .modal-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(15,61,46,0.55);
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:20px;
+  }
+  .modal-overlay.activo{
+    display:flex;
+  }
+  .modal-box{
+    background:#fff;
+    border-radius:18px;
+    max-width:420px;
+    width:100%;
+    padding:26px 24px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.3);
+    position:relative;
+  }
+  .modal-box .modal-letra{
+    width:44px;height:44px;
+    border-radius:50%;
+    background:var(--verde-oscuro);
+    color:var(--hueso);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;
+    font-size:18px;
+    margin-bottom:14px;
+  }
+  .modal-box h3{
+    margin:0 0 10px;
+    color:var(--verde-oscuro);
+    font-size:18px;
+  }
+  .modal-box p{
+    margin:0;
+    font-size:14px;
+    line-height:1.5;
+    color:var(--texto);
+  }
+  .modal-cerrar{
+    position:absolute;
+    top:14px; right:14px;
+    background:var(--hueso);
+    border:none;
+    width:30px;height:30px;
+    border-radius:50%;
+    font-size:16px;
+    cursor:pointer;
+    color:var(--texto-suave);
+  }
+
+  @media(max-width:420px){
+    .grid-indicadores{grid-template-columns:1fr;}
+    .tarjetas{grid-template-columns:1fr 1fr;}
+    .experiencia-total .num{font-size:44px;}
+    .barra-wrap, .mejora-wrap{margin-left:0;}
+    .paso p.pregunta{margin-left:0;}
+    .metodologia-wrap{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🦴</div>
+  <h1>BONES</h1>
+  <p class="sub">Tienda de mascotas</p>
+  <p class="frase">"Cada cliente es una puerta que se nos abre o se cierra en el mercado"</p>
+</header>
+
+<main>
+
+  <!-- ATENCIÓN -->
+  <section class="card paso" data-paso="atencion">
+    <div class="paso-header">
+      <div class="letra">A</div>
+      <h2>Atención</h2>
+      <button class="btn-significado" onclick="abrirModal('atencion')">¿Qué significa?</button>
+    </div>
+    <p class="pregunta">¿Cómo logro que el cliente me vea y se acerque a Bones?</p>
+    <ul class="kpi-list">
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Cartelería visible</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Redes sociales actualizadas</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Vidriera atractiva</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Saludo inmediato al ingresar</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre clave">Sonrisa (indicador clave)</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+    </ul>
+    <div class="mejora-wrap">
+      <label>Oportunidad de mejora</label>
+      <textarea data-mejora placeholder="Escribí acá qué se podría mejorar en esta etapa..."></textarea>
+    </div>
+    <div class="barra-wrap">
+      <div class="barra-label"><span>Eficiencia Atención</span><strong class="valor-pct">0%</strong></div>
+      <div class="barra-bg"><div class="barra-fill"></div></div>
+    </div>
+  </section>
+
+  <!-- INTERÉS -->
+  <section class="card paso" data-paso="interes">
+    <div class="paso-header">
+      <div class="letra">I</div>
+      <h2>Interés</h2>
+      <button class="btn-significado" onclick="abrirModal('interes')">¿Qué significa?</button>
+    </div>
+    <p class="pregunta">¿Cómo logro que el cliente quiera quedarse hablando conmigo?</p>
+    <ul class="kpi-list">
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre clave">Sonrisa (indicador clave)</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Hice preguntas abiertas</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Escuché con atención</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Mostré interés por la mascota</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Generé confianza durante la conversación</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+    </ul>
+    <div class="mejora-wrap">
+      <label>Oportunidad de mejora</label>
+      <textarea data-mejora placeholder="Escribí acá qué se podría mejorar en esta etapa..."></textarea>
+    </div>
+    <div class="barra-wrap">
+      <div class="barra-label"><span>Eficiencia Interés</span><strong class="valor-pct">0%</strong></div>
+      <div class="barra-bg"><div class="barra-fill"></div></div>
+    </div>
+  </section>
+
+  <!-- DESEO -->
+  <section class="card paso" data-paso="deseo">
+    <div class="paso-header">
+      <div class="letra">D</div>
+      <h2>Deseo</h2>
+      <button class="btn-significado" onclick="abrirModal('deseo')">¿Qué significa?</button>
+    </div>
+    <p class="pregunta">¿Cómo logro que el cliente realmente quiera ese producto?</p>
+    <ul class="kpi-list">
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre clave">Sonrisa (indicador clave)</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Expliqué beneficios para su mascota</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Conté una experiencia o ejemplo</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Relacioné el producto con la necesidad del cliente</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Generé entusiasmo por la solución</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+    </ul>
+    <div class="mejora-wrap">
+      <label>Oportunidad de mejora</label>
+      <textarea data-mejora placeholder="Escribí acá qué se podría mejorar en esta etapa..."></textarea>
+    </div>
+    <div class="barra-wrap">
+      <div class="barra-label"><span>Eficiencia Deseo</span><strong class="valor-pct">0%</strong></div>
+      <div class="barra-bg"><div class="barra-fill"></div></div>
+    </div>
+  </section>
+
+  <!-- ACCIÓN -->
+  <section class="card paso" data-paso="accion">
+    <div class="paso-header">
+      <div class="letra">A</div>
+      <h2>Acción</h2>
+      <button class="btn-significado" onclick="abrirModal('accion')">¿Qué significa?</button>
+    </div>
+    <p class="pregunta">¿Cómo cierro la venta?</p>
+    <ul class="kpi-list">
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre clave">Sonrisa (indicador clave)</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Propuse claramente la compra</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Ofrecí un producto complementario</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Expliqué las formas de pago</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Cerré la venta con seguridad</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+    </ul>
+    <div class="mejora-wrap">
+      <label>Oportunidad de mejora</label>
+      <textarea data-mejora placeholder="Escribí acá qué se podría mejorar en esta etapa..."></textarea>
+    </div>
+    <div class="barra-wrap">
+      <div class="barra-label"><span>Eficiencia Acción</span><strong class="valor-pct">0%</strong></div>
+      <div class="barra-bg"><div class="barra-fill"></div></div>
+    </div>
+  </section>
+
+  <!-- POSTVENTA -->
+  <section class="card paso" data-paso="postventa">
+    <div class="paso-header">
+      <div class="letra">P</div>
+      <h2>Postventa</h2>
+      <button class="btn-significado" onclick="abrirModal('postventa')">¿Qué significa?</button>
+    </div>
+    <p class="pregunta">¿Cómo hago para que vuelva?</p>
+    <ul class="kpi-list">
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre clave">Sonrisa al despedirse (indicador clave)</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Agradecí la compra</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Ofrecí el WhatsApp de Bones</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Invitación a seguir las redes sociales</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+      <li class="kpi-item">
+        <div class="kpi-item-head"><span class="kpi-nombre">Invitación a volver al local</span><span class="kpi-valor">5</span></div>
+        <input type="range" data-kpi min="1" max="10" value="5">
+        <div class="escala"><span>1</span><span>10</span></div>
+      </li>
+    </ul>
+    <div class="mejora-wrap">
+      <label>Oportunidad de mejora</label>
+      <textarea data-mejora placeholder="Escribí acá qué se podría mejorar en esta etapa..."></textarea>
+    </div>
+    <div class="barra-wrap">
+      <div class="barra-label"><span>Eficiencia Postventa</span><strong class="valor-pct">0%</strong></div>
+      <div class="barra-bg"><div class="barra-fill"></div></div>
+    </div>
+  </section>
+
+  <!-- INDICADORES DEL DÍA -->
+  <section class="card indicadores">
+    <h2>📊 Indicadores del día</h2>
+    <div class="grid-indicadores">
+      <div class="campo">
+        <label for="ingresaron">Clientes que ingresaron</label>
+        <input type="number" id="ingresaron" min="0" value="0">
+      </div>
+      <div class="campo">
+        <label for="compraron">Clientes que compraron</label>
+        <input type="number" id="compraron" min="0" value="0">
+      </div>
+      <div class="campo">
+        <label for="ticket">Ticket promedio ($) — opcional</label>
+        <input type="number" id="ticket" min="0" placeholder="0">
+      </div>
+      <div class="campo">
+        <label>Venta cruzada realizada</label>
+        <div class="venta-cruzada-toggle">
+          <button type="button" id="vc-si" onclick="setVentaCruzada(true)">Sí</button>
+          <button type="button" id="vc-no" onclick="setVentaCruzada(false)">No</button>
+        </div>
+      </div>
+    </div>
+    <div class="conversion-box">
+      <span>Conversión del día</span>
+      <strong id="conversion-valor">0%</strong>
+    </div>
+  </section>
+
+  <!-- RESULTADO GENERAL -->
+  <section class="card resultado">
+    <h2>📈 Resultado general</h2>
+    <div class="tarjetas" id="tarjetas-resultado">
+      <div class="tarjeta"><div class="pct" id="card-atencion">0%</div><div class="nombre">Atención</div></div>
+      <div class="tarjeta"><div class="pct" id="card-interes">0%</div><div class="nombre">Interés</div></div>
+      <div class="tarjeta"><div class="pct" id="card-deseo">0%</div><div class="nombre">Deseo</div></div>
+      <div class="tarjeta"><div class="pct" id="card-accion">0%</div><div class="nombre">Acción</div></div>
+      <div class="tarjeta"><div class="pct" id="card-postventa">0%</div><div class="nombre">Postventa</div></div>
+    </div>
+    <div class="experiencia-total">
+      <div class="titulo">Experiencia Bones del día</div>
+      <div class="num" id="experiencia-total-num">0%</div>
+    </div>
+  </section>
+
+</main>
+
+<div class="enviar-wrap">
+  <button class="btn-whatsapp" onclick="enviarAlEntrenador()">
+    <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01C17.19 3.03 14.7 2 12.04 2m0 1.67c2.2 0 4.27.86 5.82 2.42a8.21 8.21 0 0 1 2.41 5.82c0 4.55-3.7 8.25-8.25 8.25-1.44 0-2.86-.38-4.1-1.1l-.29-.17-3.11.82.83-3.04-.19-.3a8.18 8.18 0 0 1-1.26-4.38c0-4.55 3.7-8.25 8.25-8.25M8.5 6.83c-.16 0-.42.06-.65.31s-.85.83-.85 2.02.87 2.34 1 2.5c.12.16 1.7 2.6 4.13 3.63.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.47-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.24-.63.79-.78.96-.14.16-.29.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.11-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.55-1.34-.76-1.83-.2-.48-.4-.42-.55-.42h-.47" /></svg>
+    Enviar al entrenador
+  </button>
+</div>
+
+<div class="metodologia-wrap">
+  <button class="btn-metodo" onclick="window.open('https://www.google.com','_blank')">¿Qué es PHVA?</button>
+  <button class="btn-metodo" onclick="window.open('https://www.google.com','_blank')">¿Qué es Kaizen?</button>
+  <button class="btn-metodo" onclick="window.open('https://www.google.com','_blank')">¿Qué es OSAR?</button>
+</div>
+
+<footer>
+  Bones · Tienda de mascotas · "En la medida en que Bones crezca, creceremos todos"
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="cerrarModalFondo(event)">
+  <div class="modal-box">
+    <button class="modal-cerrar" onclick="cerrarModal()">✕</button>
+    <div class="modal-letra" id="modal-letra">A</div>
+    <h3 id="modal-titulo">Atención</h3>
+    <p id="modal-texto"></p>
+  </div>
+</div>
+
+<script>
+  const pasos = ["atencion","interes","deseo","accion","postventa"];
+  const nombresBonitos = {
+    atencion:"Atención", interes:"Interés", deseo:"Deseo", accion:"Acción", postventa:"Postventa"
+  };
+  const letrasBonitas = {
+    atencion:"A", interes:"I", deseo:"D", accion:"A", postventa:"P"
+  };
+  const significados = {
+    atencion:"Es el primer contacto con el cliente: lograr que nos vea, se sienta bienvenido y se acerque al local. Cartelería, vidriera y un saludo cálido son clave en este momento.",
+    interes:"Es despertar las ganas del cliente de seguir la conversación. Se logra escuchando de verdad, haciendo preguntas sobre su mascota y mostrando calidez.",
+    deseo:"Es hacer que el cliente sienta que ese producto realmente le sirve. Se logra contando beneficios concretos y relacionando el producto con la necesidad de su mascota.",
+    accion:"Es el cierre de la venta: proponer la compra con seguridad, ofrecer un producto complementario y explicar las formas de pago sin dudar.",
+    postventa:"Es todo lo que hacemos para que el cliente quiera volver: agradecerle, invitarlo a seguirnos en redes y a visitarnos de nuevo."
+  };
+
+  function abrirModal(paso){
+    document.getElementById('modal-letra').textContent = letrasBonitas[paso];
+    document.getElementById('modal-titulo').textContent = nombresBonitos[paso];
+    document.getElementById('modal-texto').textContent = significados[paso];
+    document.getElementById('modal-overlay').classList.add('activo');
+  }
+  function cerrarModal(){
+    document.getElementById('modal-overlay').classList.remove('activo');
+  }
+  function cerrarModalFondo(e){
+    if(e.target.id === 'modal-overlay') cerrarModal();
+  }
+
+  let ventaCruzada = null;
+
+  function setVentaCruzada(valor){
+    ventaCruzada = valor;
+    document.getElementById('vc-si').classList.toggle('activo', valor === true);
+    document.getElementById('vc-no').classList.toggle('activo', valor === false);
+  }
+
+  function calcularPaso(pasoEl){
+    const sliders = pasoEl.querySelectorAll('input[data-kpi]');
+    const total = sliders.length;
+    let suma = 0;
+    sliders.forEach(s => { suma += parseInt(s.value); });
+    const promedio1a10 = total ? suma/total : 0;
+    const pct = total ? Math.round((promedio1a10/10)*100) : 0;
+    pasoEl.querySelector('.barra-fill').style.width = pct + '%';
+    pasoEl.querySelector('.valor-pct').textContent = pct + '%';
+    return pct;
+  }
+
+  function recalcularTodo(){
+    const resultados = {};
+    document.querySelectorAll('.paso').forEach(pasoEl => {
+      const key = pasoEl.dataset.paso;
+      resultados[key] = calcularPaso(pasoEl);
+    });
+    document.getElementById('card-atencion').textContent = resultados.atencion + '%';
+    document.getElementById('card-interes').textContent = resultados.interes + '%';
+    document.getElementById('card-deseo').textContent = resultados.deseo + '%';
+    document.getElementById('card-accion').textContent = resultados.accion + '%';
+    document.getElementById('card-postventa').textContent = resultados.postventa + '%';
+
+    const valores = Object.values(resultados);
+    const promedio = Math.round(valores.reduce((a,b)=>a+b,0) / valores.length);
+    document.getElementById('experiencia-total-num').textContent = promedio + '%';
+
+    const ingresaron = parseInt(document.getElementById('ingresaron').value) || 0;
+    const compraron = parseInt(document.getElementById('compraron').value) || 0;
+    const conversion = ingresaron > 0 ? Math.round((compraron/ingresaron)*100) : 0;
+    document.getElementById('conversion-valor').textContent = conversion + '%';
+
+    return {resultados, promedio, ingresaron, compraron, conversion};
+  }
+
+  document.querySelectorAll('input[data-kpi]').forEach(slider => {
+    slider.addEventListener('input', function(){
+      this.closest('.kpi-item').querySelector('.kpi-valor').textContent = this.value;
+      recalcularTodo();
+    });
+  });
+  document.getElementById('ingresaron').addEventListener('input', recalcularTodo);
+  document.getElementById('compraron').addEventListener('input', recalcularTodo);
+
+  function obtenerMejoras(){
+    const mejoras = {};
+    document.querySelectorAll('.paso').forEach(pasoEl => {
+      const key = pasoEl.dataset.paso;
+      const texto = pasoEl.querySelector('[data-mejora]').value.trim();
+      mejoras[key] = texto || "(sin completar)";
+    });
+    return mejoras;
+  }
+
+  function enviarAlEntrenador(){
+    const datos = recalcularTodo();
+    const mejoras = obtenerMejoras();
+    const ticket = document.getElementById('ticket').value.trim();
+    const vc = ventaCruzada === true ? "Sí" : ventaCruzada === false ? "No" : "(sin marcar)";
+
+    let msg = `🐾 *BONES – Seguimiento diario AIDAP*\n\n`;
+    msg += `*Resultados por etapa:*\n`;
+    pasos.forEach(p => {
+      msg += `${nombresBonitos[p]}: ${datos.resultados[p]}%\n`;
+      msg += `  ↳ Oportunidad de mejora: ${mejoras[p]}\n`;
+    });
+    msg += `\n📈 *Experiencia Bones del día: ${datos.promedio}%*\n\n`;
+    msg += `📊 *Indicadores:*\n`;
+    msg += `Clientes que ingresaron: ${datos.ingresaron}\n`;
+    msg += `Clientes que compraron: ${datos.compraron}\n`;
+    msg += `Conversión: ${datos.conversion}%\n`;
+    msg += `Venta cruzada realizada: ${vc}\n`;
+    if(ticket) msg += `Ticket promedio: $${ticket}\n`;
+
+    const numero = "5493704097249";
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+
+  recalcularTodo();
+</script>
+
+</body>
+</html>

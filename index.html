@@ -931,7 +931,30 @@
     msg += `Conversión: ${datos.conversion}%\n`;
     msg += `Venta cruzada realizada: ${vc}\n`;
     if(ticket) msg += `Ticket promedio: $${ticket}\n`;
-
+// Enviar datos a la planilla de Google
+    const URL_PLANILLA = "https://script.google.com/macros/s/AKfycbz2_LaVWz3xA54rIXSM9AY1Fnya44-15DaiAQW9RzPVBVaCqcJGaqCo_HzjbuTl41cy/exec";
+    fetch(URL_PLANILLA, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify({
+        atencion: datos.resultados.atencion,
+        interes: datos.resultados.interes,
+        deseo: datos.resultados.deseo,
+        accion: datos.resultados.accion,
+        postventa: datos.resultados.postventa,
+        experiencia: datos.promedio,
+        ingresaron: datos.ingresaron,
+        compraron: datos.compraron,
+        conversion: datos.conversion,
+        ventaCruzada: vc,
+        ticket: ticket || "",
+        mejoraAtencion: mejoras.atencion,
+        mejoraInteres: mejoras.interes,
+        mejoraDeseo: mejoras.deseo,
+        mejoraAccion: mejoras.accion,
+        mejoraPostventa: mejoras.postventa
+      })
+    });
     const numero = "5493704097249";
     const url = `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`;
     window.open(url, '_blank');

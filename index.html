@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bones · Seguimiento Diario AIDAP</title>
+<title>Bones · KPI Vendedora</title>
 <style>
   :root{
     --verde-oscuro:#0f3d2e;
@@ -14,6 +14,7 @@
     --dorado:#c9a45c;
     --texto:#1b2b23;
     --texto-suave:#5c6b63;
+    --rojo:#c0503f;
     --sombra:0 10px 30px rgba(15,61,46,0.15);
     --radio:16px;
   }
@@ -25,12 +26,10 @@
     color:var(--texto);
     padding-bottom:60px;
   }
-
-  /* ---------- HEADER ---------- */
   header{
     background:radial-gradient(circle at top left, var(--verde-medio), var(--verde-oscuro) 70%);
     color:var(--hueso);
-    padding:36px 20px 44px;
+    padding:32px 20px 40px;
     text-align:center;
     position:relative;
     overflow:hidden;
@@ -46,34 +45,24 @@
     transform:translateX(-50%);
   }
   .logo{
-    width:74px; height:74px;
+    width:64px; height:64px;
     border-radius:50%;
     background:var(--hueso);
     display:flex;align-items:center;justify-content:center;
-    margin:0 auto 14px;
+    margin:0 auto 10px;
     box-shadow:0 4px 14px rgba(0,0,0,0.25);
-    font-size:34px;
+    font-size:30px;
   }
   header h1{
     margin:0;
-    font-size:26px;
-    letter-spacing:3px;
+    font-size:22px;
+    letter-spacing:2px;
     font-weight:700;
   }
   header p.sub{
     margin:6px 0 0;
     font-size:13px;
-    letter-spacing:1px;
     opacity:0.85;
-    text-transform:uppercase;
-  }
-  header .frase{
-    margin-top:16px;
-    font-size:13px;
-    font-style:italic;
-    opacity:0.9;
-    max-width:420px;
-    margin-left:auto;margin-right:auto;
   }
 
   main{
@@ -92,420 +81,293 @@
     margin-bottom:20px;
   }
 
-  /* Secciones AIDAP */
-  .paso{
-    border-left:5px solid var(--verde-claro);
+  /* Progreso */
+  .progreso-card{
+    text-align:center;
   }
-  .paso-header{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:6px;
-  }
-  .letra{
-    width:38px;height:38px;
-    border-radius:50%;
-    background:var(--verde-oscuro);
-    color:var(--hueso);
-    display:flex;align-items:center;justify-content:center;
+  .progreso-titulo{
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--texto-suave);
     font-weight:700;
-    font-size:16px;
-    flex-shrink:0;
+    margin-bottom:4px;
   }
-  .paso h2{
-    margin:0;
-    font-size:17px;
+  .progreso-contador{
+    font-size:14px;
     color:var(--verde-oscuro);
+    font-weight:700;
+    margin-bottom:14px;
+  }
+  .estaciones{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:8px;
+  }
+  .estacion{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
     flex:1;
   }
-  .btn-significado{
-    background:var(--hueso);
-    border:1px solid var(--hueso-suave);
-    color:var(--verde-oscuro);
-    font-size:12px;
-    font-weight:600;
-    padding:7px 12px;
-    border-radius:20px;
-    cursor:pointer;
-    white-space:nowrap;
-    transition:all .15s;
-  }
-  .btn-significado:hover{
-    background:var(--verde-oscuro);
-    color:var(--hueso);
-  }
-  .paso p.pregunta{
-    margin:2px 0 18px 50px;
+  .punto{
+    width:26px;height:26px;
+    border-radius:50%;
+    background:var(--hueso-suave);
+    border:2px solid #ddd3bd;
+    display:flex;align-items:center;justify-content:center;
     font-size:13px;
+    transition:all .2s;
+  }
+  .punto.si{
+    background:var(--verde-claro);
+    border-color:var(--verde-claro);
+    color:#fff;
+  }
+  .punto.no{
+    background:var(--rojo);
+    border-color:var(--rojo);
+    color:#fff;
+  }
+  .estacion-nombre{
+    font-size:9px;
     color:var(--texto-suave);
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    text-align:center;
   }
-  .kpi-list{
-    list-style:none;
-    padding:0;
-    margin:0 0 16px 0;
-  }
-  .kpi-item{
-    margin-bottom:20px;
-  }
-  .kpi-item-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    margin-bottom:8px;
-    gap:10px;
-  }
-  .kpi-item-head span.kpi-nombre{
-    font-size:14px;
-  }
-  .kpi-item-head span.kpi-nombre.clave{
+  .estacion-hora{
+    font-size:8px;
     color:var(--dorado);
-    font-weight:600;
-  }
-  .kpi-valor{
-    font-size:15px;
     font-weight:700;
-    color:var(--verde-oscuro);
-    min-width:38px;
-    text-align:right;
-    flex-shrink:0;
   }
-  input[type=range]{
-    -webkit-appearance:none;
-    appearance:none;
-    width:100%;
-    height:8px;
-    border-radius:10px;
+  .linea-conexion{
+    flex:0.35;
+    height:2px;
     background:var(--hueso-suave);
-    outline:none;
-    cursor:pointer;
-  }
-  input[type=range]::-webkit-slider-thumb{
-    -webkit-appearance:none;
-    appearance:none;
-    width:24px;height:24px;
-    border-radius:50%;
-    background:var(--verde-claro);
-    border:3px solid #fff;
-    box-shadow:0 2px 6px rgba(15,61,46,0.4);
-    cursor:pointer;
-    margin-top:-8px;
-  }
-  input[type=range]::-moz-range-thumb{
-    width:24px;height:24px;
-    border-radius:50%;
-    background:var(--verde-claro);
-    border:3px solid #fff;
-    box-shadow:0 2px 6px rgba(15,61,46,0.4);
-    cursor:pointer;
-  }
-  input[type=range]::-webkit-slider-runnable-track{
-    height:8px;
-    border-radius:10px;
-    background:var(--hueso-suave);
-  }
-  input[type=range]::-moz-range-track{
-    height:8px;
-    border-radius:10px;
-    background:var(--hueso-suave);
-  }
-  .escala{
-    display:flex;
-    justify-content:space-between;
-    font-size:10px;
-    color:var(--texto-suave);
-    margin-top:4px;
+    margin-top:11px;
   }
 
-  .mejora-wrap{
-    margin:6px 0 18px 50px;
+  /* Pregunta guiada */
+  .pregunta-card{
+    border-left:5px solid var(--verde-claro);
   }
-  .mejora-wrap label{
+  .pregunta-emoji{
+    font-size:28px;
+    margin-bottom:8px;
+  }
+  .pregunta-texto{
+    font-size:17px;
+    font-weight:700;
+    color:var(--verde-oscuro);
+    margin:0 0 8px;
+  }
+  .pregunta-desc{
+    font-size:13px;
+    color:var(--texto-suave);
+    line-height:1.4;
+    margin:0 0 20px;
+  }
+  .botones-sino{
+    display:flex;
+    gap:12px;
+  }
+  .btn-sino{
+    flex:1;
+    padding:16px;
+    border-radius:14px;
+    border:2px solid var(--hueso-suave);
+    background:var(--hueso);
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    transition:all .15s;
+    color:var(--texto);
+  }
+  .btn-sino.si:hover, .btn-sino.si.elegido{
+    background:var(--verde-claro);
+    border-color:var(--verde-claro);
+    color:#fff;
+  }
+  .btn-sino.no:hover, .btn-sino.no.elegido{
+    background:var(--rojo);
+    border-color:var(--rojo);
+    color:#fff;
+  }
+
+  .campo-extra{
+    margin-top:16px;
+  }
+  .campo-extra label{
     display:block;
     font-size:12px;
     font-weight:700;
     color:var(--verde-oscuro);
     margin-bottom:6px;
   }
-  .mejora-wrap textarea{
+  .campo-extra input, .campo-extra textarea{
     width:100%;
     border:1px solid #dcd3c2;
     border-radius:10px;
-    padding:10px;
+    padding:11px;
     font-family:inherit;
-    font-size:13px;
+    font-size:14px;
+    background:var(--hueso);
     resize:vertical;
-    min-height:50px;
-    background:var(--hueso);
   }
-
-  .barra-wrap{
-    margin-left:50px;
-    margin-top:8px;
-  }
-  .barra-label{
-    display:flex;
-    justify-content:space-between;
-    font-size:12px;
-    color:var(--texto-suave);
-    margin-bottom:6px;
-  }
-  .barra-label strong{color:var(--verde-oscuro);font-size:14px;}
-  .barra-bg{
-    background:var(--hueso-suave);
-    border-radius:20px;
-    height:12px;
-    overflow:hidden;
-  }
-  .barra-fill{
-    height:100%;
-    background:linear-gradient(90deg,var(--verde-claro),var(--verde-oscuro));
-    border-radius:20px;
-    width:0%;
-    transition:width .3s ease;
-  }
-
-  /* Indicadores del día */
-  .indicadores h2, .resultado h2{
+  .campo-extra input.monto-grande{
+    font-size:22px;
+    font-weight:700;
     color:var(--verde-oscuro);
-    font-size:17px;
-    margin-top:0;
+    padding:16px;
   }
-  .grid-indicadores{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:14px;
-  }
-  .campo{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-  }
-  .campo label{
-    font-size:12px;
-    color:var(--texto-suave);
-    font-weight:600;
-  }
-  .campo input, .campo select{
-    border:1px solid #dcd3c2;
-    border-radius:10px;
-    padding:10px;
-    font-size:14px;
-    background:var(--hueso);
-    font-family:inherit;
-  }
-  .conversion-box{
-    margin-top:14px;
-    background:var(--hueso);
-    border-radius:10px;
-    padding:12px 14px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-size:14px;
-  }
-  .conversion-box strong{
-    color:var(--verde-oscuro);
-    font-size:18px;
-  }
-  .venta-cruzada-toggle{
-    margin-top:14px;
-    display:flex;
-    gap:10px;
-  }
-  .venta-cruzada-toggle button{
-    flex:1;
-    padding:10px;
-    border-radius:10px;
-    border:1px solid #dcd3c2;
-    background:var(--hueso);
-    font-family:inherit;
-    font-size:13px;
-    cursor:pointer;
-    transition:all .15s;
-  }
-  .venta-cruzada-toggle button.activo{
+  .campo-extra textarea{min-height:70px;}
+  .campo-extra + .campo-extra{margin-top:12px;}
+
+  .btn-continuar{
+    margin-top:16px;
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
     background:var(--verde-oscuro);
     color:var(--hueso);
-    border-color:var(--verde-oscuro);
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .btn-continuar:disabled{
+    opacity:0.4;
+    cursor:not-allowed;
+  }
+  .btn-finalizar{
+    background:#1f9e56;
   }
 
-  /* Resultado general */
-  .resultado{
+  /* Recorrido completo */
+  .completo-card{
+    text-align:center;
     background:linear-gradient(160deg,var(--verde-oscuro),var(--verde-medio));
     color:var(--hueso);
   }
-  .resultado h2{color:var(--hueso);}
-  .tarjetas{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-    margin-bottom:18px;
-  }
-  .tarjeta{
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.15);
-    border-radius:12px;
-    padding:14px;
-    text-align:center;
-  }
-  .tarjeta .pct{
-    font-size:24px;
-    font-weight:700;
-    color:var(--dorado);
-  }
-  .tarjeta .nombre{
-    font-size:12px;
-    text-transform:uppercase;
-    letter-spacing:1px;
-    opacity:0.85;
-    margin-top:4px;
-  }
-  .experiencia-total{
-    text-align:center;
-    background:rgba(255,255,255,0.1);
-    border-radius:16px;
-    padding:24px;
-    border:1px solid rgba(255,255,255,0.2);
-  }
-  .experiencia-total .titulo{
-    font-size:13px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    opacity:0.85;
-    margin-bottom:8px;
-  }
-  .experiencia-total .num{
-    font-size:52px;
+  .completo-card .num{
+    font-size:40px;
     font-weight:800;
     color:var(--dorado);
-    line-height:1;
+    margin:6px 0;
+  }
+  .completo-card .capital-linea{
+    font-size:15px;
+    margin-top:6px;
+    opacity:0.95;
+  }
+  .btn-rehacer{
+    margin-top:14px;
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.3);
+    color:var(--hueso);
+    padding:10px 16px;
+    border-radius:10px;
+    font-size:13px;
+    cursor:pointer;
   }
 
-  /* Botón WhatsApp */
-  .enviar-wrap{
-    max-width:640px;
-    margin:26px auto 0;
-    padding:0 18px;
+  /* Video del día */
+  .video h2{
+    margin:0 0 4px;
+    font-size:16px;
+    color:var(--verde-oscuro);
   }
-  .btn-whatsapp{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
+  .video p.ayuda{
+    font-size:12px;
+    color:var(--texto-suave);
+    margin:0 0 14px;
+  }
+  .video-guardado-msg{
+    background:var(--hueso);
+    border-radius:10px;
+    padding:14px;
+    font-size:13px;
+    color:var(--verde-oscuro);
+    text-align:center;
+    font-weight:600;
+  }
+  .btn-guardar-video{
+    margin-top:14px;
     width:100%;
+    padding:13px;
+    border:none;
+    border-radius:12px;
     background:#1f9e56;
     color:#fff;
-    border:none;
-    padding:16px;
-    font-size:16px;
+    font-size:14px;
     font-weight:700;
-    border-radius:14px;
     cursor:pointer;
-    box-shadow:0 8px 22px rgba(31,158,86,0.4);
-    transition:transform .15s;
   }
-  .btn-whatsapp:hover{transform:translateY(-2px);}
-  .btn-whatsapp svg{width:22px;height:22px;fill:#fff;}
-
-  /* Botones de metodología */
-  .metodologia-wrap{
-    max-width:640px;
-    margin:14px auto 0;
-    padding:0 18px;
+  .video-sino{
     display:flex;
     gap:10px;
+    margin-top:4px;
   }
-  .btn-metodo{
+  .video-sino button{
     flex:1;
-    background:#fff;
-    border:1px solid var(--hueso-suave);
-    color:var(--verde-oscuro);
-    padding:12px 8px;
-    font-size:12px;
+    padding:10px;
+    border-radius:10px;
+    border:1px solid #dcd3c2;
+    background:var(--hueso);
+    font-size:13px;
     font-weight:700;
-    border-radius:12px;
     cursor:pointer;
-    box-shadow:0 4px 12px rgba(15,61,46,0.08);
-    transition:all .15s;
-    text-align:center;
   }
-  .btn-metodo:hover{
-    background:var(--verde-oscuro);
-    color:var(--hueso);
-    transform:translateY(-2px);
+  .video-sino button.activo.si{background:var(--verde-claro);color:#fff;border-color:var(--verde-claro);}
+  .video-sino button.activo.no{background:var(--rojo);color:#fff;border-color:var(--rojo);}
+
+  /* Historial */
+  .historial h2{
+    margin:0 0 4px;
+    font-size:16px;
+    color:var(--verde-oscuro);
+  }
+  .fila-historial{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 0;
+    border-bottom:1px solid var(--hueso-suave);
+  }
+  .fila-historial:last-child{border-bottom:none;}
+  .fila-historial .etiqueta{
+    font-size:13px;
+    font-weight:700;
+    color:var(--texto-suave);
+    min-width:70px;
+  }
+  .fila-historial .puntos{
+    display:flex;
+    gap:5px;
+  }
+  .fila-historial .puntos span{
+    width:16px;height:16px;
+    border-radius:50%;
+    background:var(--hueso-suave);
+  }
+  .fila-historial .puntos span.si{background:var(--verde-claro);}
+  .fila-historial .puntos span.no{background:var(--rojo);}
+  .sin-historial{
+    font-size:13px;
+    color:var(--texto-suave);
+    text-align:center;
+    padding:10px 0;
   }
 
   footer{
     text-align:center;
     font-size:12px;
     color:var(--texto-suave);
-    margin-top:30px;
+    margin-top:26px;
     padding:0 20px;
-  }
-
-  /* Modal */
-  .modal-overlay{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(15,61,46,0.55);
-    align-items:center;
-    justify-content:center;
-    z-index:100;
-    padding:20px;
-  }
-  .modal-overlay.activo{
-    display:flex;
-  }
-  .modal-box{
-    background:#fff;
-    border-radius:18px;
-    max-width:420px;
-    width:100%;
-    padding:26px 24px;
-    box-shadow:0 20px 50px rgba(0,0,0,0.3);
-    position:relative;
-  }
-  .modal-box .modal-letra{
-    width:44px;height:44px;
-    border-radius:50%;
-    background:var(--verde-oscuro);
-    color:var(--hueso);
-    display:flex;align-items:center;justify-content:center;
-    font-weight:700;
-    font-size:18px;
-    margin-bottom:14px;
-  }
-  .modal-box h3{
-    margin:0 0 10px;
-    color:var(--verde-oscuro);
-    font-size:18px;
-  }
-  .modal-box p{
-    margin:0;
-    font-size:14px;
-    line-height:1.5;
-    color:var(--texto);
-  }
-  .modal-cerrar{
-    position:absolute;
-    top:14px; right:14px;
-    background:var(--hueso);
-    border:none;
-    width:30px;height:30px;
-    border-radius:50%;
-    font-size:16px;
-    cursor:pointer;
-    color:var(--texto-suave);
-  }
-
-  @media(max-width:420px){
-    .grid-indicadores{grid-template-columns:1fr;}
-    .tarjetas{grid-template-columns:1fr 1fr;}
-    .experiencia-total .num{font-size:44px;}
-    .barra-wrap, .mejora-wrap{margin-left:0;}
-    .paso p.pregunta{margin-left:0;}
-    .metodologia-wrap{flex-direction:column;}
   }
 </style>
 </head>
@@ -513,454 +375,552 @@
 
 <header>
   <div class="logo">🦴</div>
-  <h1>BONES</h1>
-  <p class="sub">Tienda de mascotas</p>
-  <p class="frase">"Cada cliente es una puerta que se nos abre o se cierra en el mercado"</p>
+  <h1>KPI VENDEDORA</h1>
+  <p class="sub">Registro de desempeño diario · Bones</p>
 </header>
 
 <main>
 
-  <!-- ATENCIÓN -->
-  <section class="card paso" data-paso="atencion">
-    <div class="paso-header">
-      <div class="letra">A</div>
-      <h2>Atención</h2>
-      <button class="btn-significado" onclick="abrirModal('atencion')">¿Qué significa?</button>
-    </div>
-    <p class="pregunta">¿Cómo logro que el cliente vea y se acerque a Bones?</p>
-    <ul class="kpi-list">
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">Cartelería visible y vidriera (exhibición de producto, el orden y la reposición de vacios en la vidriera).</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">Redes sociales actualizadas</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">¿Innovación comercial? (Implementacion creativa de nuevas ideas de forma continua para captar la atención del cliente, por ejemplo: productos destacados, nuevos videos y distintas formas de hacerlo, ideas y acciones que diferencien a Bones de otras tiendas para mascotas). </span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">Acercamiento inicial al ingreso del cliente con entusiasmo y predisposición</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre clave">Sonrisa (indicador clave)</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-    </ul>
-    <div class="mejora-wrap">
-      <label>Oportunidad de mejora</label>
-      <textarea data-mejora placeholder="Escribí acá qué se podría mejorar en esta etapa..."></textarea>
-    </div>
-    <div class="barra-wrap">
-      <div class="barra-label"><span>Eficiencia Atención</span><strong class="valor-pct">0%</strong></div>
-      <div class="barra-bg"><div class="barra-fill"></div></div>
-    </div>
+  <!-- PROGRESO -->
+  <section class="card progreso-card">
+    <div class="progreso-titulo">Progreso de hoy</div>
+    <div class="progreso-contador" id="progreso-contador">0 / 7 registrados</div>
+    <div class="estaciones" id="estaciones"></div>
   </section>
 
-  <!-- INTERÉS -->
-  <section class="card paso" data-paso="interes">
-    <div class="paso-header">
-      <div class="letra">I</div>
-      <h2>Interés</h2>
-      <button class="btn-significado" onclick="abrirModal('interes')">¿Qué significa?</button>
-    </div>
-    <p class="pregunta">¿Cómo logro que el cliente quiera quedarse en el local? Aromas, voz, postura corporal, limpieza, música, contexto agradable en general</p>
-    <ul class="kpi-list">
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre clave">Sonrisa (indicador clave)</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">Hice preguntas abiertas (invitan a conocer al cliente, también a conversar y evitan el "SI, NO" tajante que llama al silencio. Por ejemplo: ¿cómo estas? ¿cómo lo trata el clima? ¿en que le puedo servir? La idea es generar un puente conversacional</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">¿Escuché con atención? Evitar dispersión con celular, rumeo mental. Acá hay que mirar a los ojos al cliente, hacer gestos que muestren interes y enfoque pleno en la conversación</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">Mostré interés por la mascota</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">Hablé con seguridad sobre los productos, sin titubear, sin muletillas "ehmm" "digamos" "viste" "mmm" "estem"</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-    </ul>
-    <div class="mejora-wrap">
-      <label>Oportunidad de mejora</label>
-      <textarea data-mejora placeholder="Escribí acá qué se podría mejorar en esta etapa..."></textarea>
-    </div>
-    <div class="barra-wrap">
-      <div class="barra-label"><span>Eficiencia Interés</span><strong class="valor-pct">0%</strong></div>
-      <div class="barra-bg"><div class="barra-fill"></div></div>
-    </div>
+  <!-- PREGUNTA GUIADA -->
+  <section class="card pregunta-card" id="pregunta-card"></section>
+
+  <!-- VIDEO DEL DÍA -->
+  <section class="card video" id="video-card">
+    <h2>🎥 Video del día</h2>
+    <p class="ayuda">Se completa una sola vez por día.</p>
+    <div id="video-contenido"></div>
   </section>
 
-  <!-- DESEO -->
-  <section class="card paso" data-paso="deseo">
-    <div class="paso-header">
-      <div class="letra">D</div>
-      <h2>Deseo</h2>
-      <button class="btn-significado" onclick="abrirModal('deseo')">¿Qué significa?</button>
-    </div>
-    <p class="pregunta">¿Cómo logro que el cliente realmente quiera ese producto?</p>
-    <ul class="kpi-list">
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre clave">Sonrisa (indicador clave)</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">Expliqué beneficios para su mascota</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">¿Relacioné el producto con la rutina del dueño o la mascota?</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">Relacioné el producto con la necesidad del cliente</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">¿Hice que imagine el resultado?</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-    </ul>
-    <div class="mejora-wrap">
-      <label>Oportunidad de mejora</label>
-      <textarea data-mejora placeholder="Escribí acá qué se podría mejorar en esta etapa..."></textarea>
-    </div>
-    <div class="barra-wrap">
-      <div class="barra-label"><span>Eficiencia Deseo</span><strong class="valor-pct">0%</strong></div>
-      <div class="barra-bg"><div class="barra-fill"></div></div>
-    </div>
-  </section>
-
-  <!-- ACCIÓN -->
-  <section class="card paso" data-paso="accion">
-    <div class="paso-header">
-      <div class="letra">A</div>
-      <h2>Acción</h2>
-      <button class="btn-significado" onclick="abrirModal('accion')">¿Qué significa?</button>
-    </div>
-    <p class="pregunta">¿Cómo cierro la venta?</p>
-    <ul class="kpi-list">
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre clave">Sonrisa (indicador clave)</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">¿Conversé con el cliente mientras le cobraba o gestionaba los productos que me pidió, para evitar silencios incómodos?</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">Ofrecí un producto complementario</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">¿Verifiqué que el cliente se fuera conforme con su compra?</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">¿Qué tan eficiente fui con la tecnología a la hora de cargar los datos en el sistema de excel o facturación?</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-    </ul>
-    <div class="mejora-wrap">
-      <label>Oportunidad de mejora</label>
-      <textarea data-mejora placeholder="Escribí acá qué se podría mejorar en esta etapa..."></textarea>
-    </div>
-    <div class="barra-wrap">
-      <div class="barra-label"><span>Eficiencia Acción</span><strong class="valor-pct">0%</strong></div>
-      <div class="barra-bg"><div class="barra-fill"></div></div>
-    </div>
-  </section>
-
-  <!-- POSTVENTA -->
-  <section class="card paso" data-paso="postventa">
-    <div class="paso-header">
-      <div class="letra">P</div>
-      <h2>Postventa</h2>
-      <button class="btn-significado" onclick="abrirModal('postventa')">¿Qué significa?</button>
-    </div>
-    <p class="pregunta">¿Cómo hago para que vuelva?</p>
-    <ul class="kpi-list">
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre clave">Sonrisa al despedirse (indicador clave)</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">Agradecí la compra</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">¿Ofrecí el WhatsApp de Bones, independientemente de que el cliente lo solicite?</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">Invitación a seguir las redes sociales</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-      <li class="kpi-item">
-        <div class="kpi-item-head"><span class="kpi-nombre">Invitación a volver al local</span><span class="kpi-valor">5</span></div>
-        <input type="range" data-kpi min="1" max="10" value="5">
-        <div class="escala"><span>1</span><span>10</span></div>
-      </li>
-    </ul>
-    <div class="mejora-wrap">
-      <label>Oportunidad de mejora</label>
-      <textarea data-mejora placeholder="Escribí acá qué se podría mejorar en esta etapa..."></textarea>
-    </div>
-    <div class="barra-wrap">
-      <div class="barra-label"><span>Eficiencia Postventa</span><strong class="valor-pct">0%</strong></div>
-      <div class="barra-bg"><div class="barra-fill"></div></div>
-    </div>
-  </section>
-
-  <!-- INDICADORES DEL DÍA -->
-  <section class="card indicadores">
-    <h2>📊 Indicadores del día</h2>
-    <div class="grid-indicadores">
-      <div class="campo">
-        <label for="ingresaron">Clientes que ingresaron</label>
-        <input type="number" id="ingresaron" min="0" value="0">
-      </div>
-      <div class="campo">
-        <label for="compraron">Clientes que compraron</label>
-        <input type="number" id="compraron" min="0" value="0">
-      </div>
-      <div class="campo">
-        <label for="ticket">Ticket promedio ($) — opcional</label>
-        <input type="number" id="ticket" min="0" placeholder="0">
-      </div>
-      <div class="campo">
-        <label>Venta cruzada realizada</label>
-        <div class="venta-cruzada-toggle">
-          <button type="button" id="vc-si" onclick="setVentaCruzada(true)">Sí</button>
-          <button type="button" id="vc-no" onclick="setVentaCruzada(false)">No</button>
-        </div>
-      </div>
-    </div>
-    <div class="conversion-box">
-      <span>Conversión del día</span>
-      <strong id="conversion-valor">0%</strong>
-    </div>
-  </section>
-
-  <!-- RESULTADO GENERAL -->
-  <section class="card resultado">
-    <h2>📈 Resultado general</h2>
-    <div class="tarjetas" id="tarjetas-resultado">
-      <div class="tarjeta"><div class="pct" id="card-atencion">0%</div><div class="nombre">Atención</div></div>
-      <div class="tarjeta"><div class="pct" id="card-interes">0%</div><div class="nombre">Interés</div></div>
-      <div class="tarjeta"><div class="pct" id="card-deseo">0%</div><div class="nombre">Deseo</div></div>
-      <div class="tarjeta"><div class="pct" id="card-accion">0%</div><div class="nombre">Acción</div></div>
-      <div class="tarjeta"><div class="pct" id="card-postventa">0%</div><div class="nombre">Postventa</div></div>
-    </div>
-    <div class="experiencia-total">
-      <div class="titulo">Experiencia Bones del día</div>
-      <div class="num" id="experiencia-total-num">0%</div>
-    </div>
+  <!-- HISTORIAL -->
+  <section class="card historial">
+    <h2>📅 Mi progreso</h2>
+    <div id="lista-historial"></div>
   </section>
 
 </main>
 
-<div class="enviar-wrap">
-  <button class="btn-whatsapp" onclick="enviarAlEntrenador()">
-    <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01C17.19 3.03 14.7 2 12.04 2m0 1.67c2.2 0 4.27.86 5.82 2.42a8.21 8.21 0 0 1 2.41 5.82c0 4.55-3.7 8.25-8.25 8.25-1.44 0-2.86-.38-4.1-1.1l-.29-.17-3.11.82.83-3.04-.19-.3a8.18 8.18 0 0 1-1.26-4.38c0-4.55 3.7-8.25 8.25-8.25M8.5 6.83c-.16 0-.42.06-.65.31s-.85.83-.85 2.02.87 2.34 1 2.5c.12.16 1.7 2.6 4.13 3.63.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.47-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.24-.63.79-.78.96-.14.16-.29.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.11-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.55-1.34-.76-1.83-.2-.48-.4-.42-.55-.42h-.47" /></svg>
-    Enviar al entrenador
-  </button>
-</div>
-
-<div class="metodologia-wrap">
-  <button class="btn-metodo" onclick="window.open('Cultura de Bones.pdf','_blank')">Cultura de Bones</button>
-  <button class="btn-metodo" onclick="window.open('https://classroom.google.com/c/Nzk4NDkxNzY3NTEy/m/ODY5MDc2NDI5MTYy/details','_blank')">Archivos importantes en base a los objetivos propuestos</button>
-  <button class="btn-metodo" onclick="window.open('https://docs.google.com/document/d/12ugTUYSRGjr9JMgnDycGMS3tyOfBm2gbh68RBijGrBk/edit?usp=sharing','_blank')">Plan de acción para el objetivo de $200.000,00 diarios</button>
-</div>
-
 <footer>
-  Bones · Tienda de mascotas · "En la medida en que Bones crezca, creceremos todos"
+  Bones · Tienda de mascotas · "Cada cliente es una puerta que se nos abre o se cierra en el mercado"
 </footer>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modal-overlay" onclick="cerrarModalFondo(event)">
-  <div class="modal-box">
-    <button class="modal-cerrar" onclick="cerrarModal()">✕</button>
-    <div class="modal-letra" id="modal-letra">A</div>
-    <h3 id="modal-titulo">Atención</h3>
-    <p id="modal-texto"></p>
-  </div>
-</div>
-
 <script>
-  const pasos = ["atencion","interes","deseo","accion","postventa"];
-  const nombresBonitos = {
-    atencion:"Atención", interes:"Interés", deseo:"Deseo", accion:"Acción", postventa:"Postventa"
-  };
-  const letrasBonitas = {
-    atencion:"A", interes:"I", deseo:"D", accion:"A", postventa:"P"
-  };
-  const significados = {
-    atencion:"Llamar la atención es lograr que el cliente note a Bones entre tantas otras tiendas para mascotas, decida ingresar y comience una conversación. Es el primer paso para generar una venta: hacer que el cliente te mire, se acerque y quiera conocer lo que tenés para ofrecer.",
-    interes:"Es generar que el cliente quiera quedarse. Sonrisa, aromas, música, haciendo preguntas sobre su mascota y el vendedor genera el contexto.",
-    deseo:"Generar deseo es ayudar al cliente a imaginar cómo mejorará su vida o la de su mascota al elegir un producto. Las personas suelen comprar por emoción y luego justificar su decisión con la lógica. Por ejemplo, Coca Cola no vende solo una bebida. Vende momentos, unión y felicidad. En Bones no vendemos solo productos para mascotas. Ayudamos a que las mascotas estén más sanas y felices, y a que sus dueños disfruten de la tranquilidad de brindarles el mejor cuidado De esta manera, las mascotas se convierten en animales más sanos, felices y mejor cuidados, mientras que sus dueños se convierten en personas más tranquilas, seguras y satisfechas por el bienestar que les brindan.",
-    accion:"Es el cierre de la venta: proponer la compra con seguridad, disponoendo de todos los metodos de cobro, que no haya silencios ofrecer un producto complementario y hacer crosselling.",
-    postventa:"Es todo lo que hacemos para que el cliente quiera volver: es mas facil venderle a alguien que ya le vendimos una vez que volver a prospectar, invitarlo a seguirnos en redes y a visitarnos de nuevo."
-  };
+  /* ===================== CONFIG DE PASOS ===================== */
+  const PASOS = [
+    {
+      id: "local",
+      nombre: "Local",
+      emoji: "🏪",
+      texto: "¿El local está preparado para llamar la atención?",
+      desc: "Vidriera limpia · piso limpio · productos ordenados y atractivos · cartelería visible.",
+      tipo: "simple"
+    },
+    {
+      id: "postura",
+      nombre: "Postura",
+      emoji: "🧍",
+      texto: "¿Mantuve una postura corporal abierta?",
+      desc: "Miré a los ojos · hombros abiertos · manos relajadas y visibles · no me cerré corporalmente.",
+      tipo: "simple"
+    },
+    {
+      id: "sonrisa",
+      nombre: "Sonrisa",
+      emoji: "😊",
+      texto: "¿Mantuve la sonrisa durante toda la interacción?",
+      desc: "La sonrisa no solamente al comenzar: debe mantenerse durante todo el contacto con el cliente.",
+      tipo: "simple"
+    },
+    {
+      id: "mascota",
+      nombre: "Mascota",
+      emoji: "🐶",
+      texto: "¿Relacioné el producto con la mascota del cliente?",
+      desc: "Busqué conocer a la mascota y relacioné el producto con sus características, necesidades o rutina.",
+      tipo: "evidencia",
+      camposSi: [
+        {id:"nombreMascota", label:"¿Cuál es el nombre de la mascota?", tag:"input"},
+        {id:"relacion", label:"¿Cómo relacionaste el producto con ella?", tag:"textarea"}
+      ]
+    },
+    {
+      id: "floreo",
+      nombre: "Floreo",
+      emoji: "💬",
+      texto: "¿Utilicé floreo verbal para generar cercanía?",
+      desc: "Hice preguntas sobre la mascota · saqué temas de conversación · mostré interés genuino.",
+      tipo: "evidencia",
+      camposSi: [
+        {id:"comoFloreo", label:"¿Cómo utilizaste el floreo verbal?", tag:"textarea"}
+      ]
+    },
+    {
+      id: "venta",
+      nombre: "Venta",
+      emoji: "🛒",
+      texto: "¿Realicé una venta cruzada específica?",
+      desc: "No pregunté solamente \u201c¿necesitás algo más?\u201d. Ofrecí un producto complementario relacionado con la compra.",
+      tipo: "evidencia",
+      camposSi: [
+        {id:"queOfreci", label:"¿Qué ofreciste y por qué era complementario?", tag:"textarea"}
+      ]
+    },
+    {
+      id: "capital",
+      nombre: "Capital",
+      emoji: "💵",
+      texto: "¿Cuánto dinero obtuviste en esta venta?",
+      desc: "Cargá el capital obtenido para cerrar el registro de esta interacción.",
+      tipo: "capital"
+    }
+  ];
 
-  function abrirModal(paso){
-    document.getElementById('modal-letra').textContent = letrasBonitas[paso];
-    document.getElementById('modal-titulo').textContent = nombresBonitos[paso];
-    document.getElementById('modal-texto').textContent = significados[paso];
-    document.getElementById('modal-overlay').classList.add('activo');
-  }
-  function cerrarModal(){
-    document.getElementById('modal-overlay').classList.remove('activo');
-  }
-  function cerrarModalFondo(e){
-    if(e.target.id === 'modal-overlay') cerrarModal();
+  const hoyStr = () => new Date().toISOString().slice(0,10);
+  const horaAhora = () => new Date().toLocaleTimeString('es-AR', {hour:'2-digit', minute:'2-digit'});
+
+  /* ===================== ESTADO ===================== */
+  function estadoVacio(){
+    return {
+      fecha: hoyStr(),
+      pasoActual: 0,
+      respuestas: {},
+      interaccionesHoy: [],
+      video: { hecho:null, titulo:"", interrupcion:"", retencion:"", cta:"", motivoNoHecho:"", publicadoInstagram:null, ultimoEnvioHora:null }
+    };
   }
 
-  let ventaCruzada = null;
-
-  function setVentaCruzada(valor){
-    ventaCruzada = valor;
-    document.getElementById('vc-si').classList.toggle('activo', valor === true);
-    document.getElementById('vc-no').classList.toggle('activo', valor === false);
+  function cargarEstado(){
+    const guardado = localStorage.getItem('bones_hoy');
+    if(guardado){
+      const obj = JSON.parse(guardado);
+      if(obj.fecha === hoyStr()) return obj;
+    }
+    return estadoVacio();
   }
 
-  function calcularPaso(pasoEl){
-    const sliders = pasoEl.querySelectorAll('input[data-kpi]');
-    const total = sliders.length;
-    let suma = 0;
-    sliders.forEach(s => { suma += parseInt(s.value); });
-    const promedio1a10 = total ? suma/total : 0;
-    const pct = total ? Math.round((promedio1a10/10)*100) : 0;
-    pasoEl.querySelector('.barra-fill').style.width = pct + '%';
-    pasoEl.querySelector('.valor-pct').textContent = pct + '%';
-    return pct;
+  let estado = cargarEstado();
+
+  function guardarEstado(){
+    localStorage.setItem('bones_hoy', JSON.stringify(estado));
   }
 
-  function recalcularTodo(){
-    const resultados = {};
-    document.querySelectorAll('.paso').forEach(pasoEl => {
-      const key = pasoEl.dataset.paso;
-      resultados[key] = calcularPaso(pasoEl);
+  function guardarInteraccionEnHistorial(){
+    // Guarda esta venta puntual como una fila nueva del historial (no pisa las anteriores)
+    const lista = JSON.parse(localStorage.getItem('bones_interacciones') || "[]");
+    lista.push({
+      fecha: estado.fecha,
+      hora: horaAhora(),
+      respuestas: JSON.parse(JSON.stringify(estado.respuestas))
     });
-    document.getElementById('card-atencion').textContent = resultados.atencion + '%';
-    document.getElementById('card-interes').textContent = resultados.interes + '%';
-    document.getElementById('card-deseo').textContent = resultados.deseo + '%';
-    document.getElementById('card-accion').textContent = resultados.accion + '%';
-    document.getElementById('card-postventa').textContent = resultados.postventa + '%';
-
-    const valores = Object.values(resultados);
-    const promedio = Math.round(valores.reduce((a,b)=>a+b,0) / valores.length);
-    document.getElementById('experiencia-total-num').textContent = promedio + '%';
-
-    const ingresaron = parseInt(document.getElementById('ingresaron').value) || 0;
-    const compraron = parseInt(document.getElementById('compraron').value) || 0;
-    const conversion = ingresaron > 0 ? Math.round((compraron/ingresaron)*100) : 0;
-    document.getElementById('conversion-valor').textContent = conversion + '%';
-
-    return {resultados, promedio, ingresaron, compraron, conversion};
+    localStorage.setItem('bones_interacciones', JSON.stringify(lista));
   }
 
-  document.querySelectorAll('input[data-kpi]').forEach(slider => {
-    slider.addEventListener('input', function(){
-      this.closest('.kpi-item').querySelector('.kpi-valor').textContent = this.value;
-      recalcularTodo();
+  function guardarVideoEnHistorial(){
+    const lista = JSON.parse(localStorage.getItem('bones_videos') || "[]");
+    lista.push({
+      fecha: estado.fecha,
+      hora: estado.video.ultimoEnvioHora || horaAhora(),
+      hecho: estado.video.hecho,
+      titulo: estado.video.titulo,
+      publicadoInstagram: estado.video.publicadoInstagram
     });
-  });
-  document.getElementById('ingresaron').addEventListener('input', recalcularTodo);
-  document.getElementById('compraron').addEventListener('input', recalcularTodo);
-
-  function obtenerMejoras(){
-    const mejoras = {};
-    document.querySelectorAll('.paso').forEach(pasoEl => {
-      const key = pasoEl.dataset.paso;
-      const texto = pasoEl.querySelector('[data-mejora]').value.trim();
-      mejoras[key] = texto || "(sin completar)";
-    });
-    return mejoras;
+    localStorage.setItem('bones_videos', JSON.stringify(lista));
   }
 
+  /* ===================== PROGRESO / ESTACIONES ===================== */
+  function renderEstaciones(){
+    const cont = document.getElementById('estaciones');
+    cont.innerHTML = "";
+    PASOS.forEach((p, i) => {
+      const r = estado.respuestas[p.id];
+      let claseP = '';
+      let simbolo = '';
+      if(r){
+        if(p.tipo === 'capital'){ claseP = 'si'; simbolo = '✓'; }
+        else { claseP = (r.resp === 'si' ? 'si' : 'no'); simbolo = (r.resp === 'si' ? '✓' : '✕'); }
+      }
+      const est = document.createElement('div');
+      est.className = 'estacion';
+      est.innerHTML = `
+        <div class="punto ${claseP}">${simbolo}</div>
+        <div class="estacion-nombre">${p.nombre}</div>
+        <div class="estacion-hora">${r && r.hora ? r.hora : ''}</div>
+      `;
+      cont.appendChild(est);
+      if(i < PASOS.length - 1){
+        const linea = document.createElement('div');
+        linea.className = 'linea-conexion';
+        cont.appendChild(linea);
+      }
+    });
+    const completados = Object.keys(estado.respuestas).length;
+    document.getElementById('progreso-contador').textContent = `${completados} / ${PASOS.length} registrados`;
+  }
+
+  /* ===================== PREGUNTA GUIADA ===================== */
+  function renderPregunta(){
+    const cont = document.getElementById('pregunta-card');
+
+    if(estado.pasoActual >= PASOS.length){
+      const siCount = Object.values(estado.respuestas).filter(r => r.resp === 'si').length;
+      const capital = estado.respuestas['capital'] ? estado.respuestas['capital'].monto : 0;
+      cont.className = 'card completo-card';
+      cont.innerHTML = `
+        <div style="font-size:13px;letter-spacing:1px;text-transform:uppercase;opacity:0.85;">Interacción enviada al entrenador</div>
+        <div class="num">${siCount} de 6</div>
+        <div style="font-size:13px;opacity:0.9;">conductas cumplidas</div>
+        <div class="capital-linea">💵 Capital obtenido: $${capital.toLocaleString('es-AR')}</div>
+        <button class="btn-rehacer" onclick="rehacerRecorrido()">Registrar otra interacción</button>
+      `;
+      return;
+    }
+
+    const p = PASOS[estado.pasoActual];
+    const yaRespondido = estado.respuestas[p.id];
+
+    cont.className = 'card pregunta-card';
+
+    if(p.tipo === 'capital'){
+      const montoActual = yaRespondido ? yaRespondido.monto : "";
+      cont.innerHTML = `
+        <div class="pregunta-emoji">${p.emoji}</div>
+        <p class="pregunta-texto">${p.texto}</p>
+        <p class="pregunta-desc">${p.desc}</p>
+        <div class="campo-extra">
+          <label>Capital obtenido</label>
+          <input type="number" min="0" class="monto-grande" id="campo-capital" placeholder="$ 0" value="${montoActual}">
+        </div>
+        <button class="btn-continuar btn-finalizar" onclick="finalizarCapital()">Finalizar y enviar al entrenador</button>
+      `;
+      return;
+    }
+
+    let html = `
+      <div class="pregunta-emoji">${p.emoji}</div>
+      <p class="pregunta-texto">${p.texto}</p>
+      <p class="pregunta-desc">${p.desc}</p>
+      <div class="botones-sino">
+        <button class="btn-sino si ${yaRespondido && yaRespondido.resp==='si' ? 'elegido':''}" onclick="elegirRespuesta('${p.id}','si')">SÍ</button>
+        <button class="btn-sino no ${yaRespondido && yaRespondido.resp==='no' ? 'elegido':''}" onclick="elegirRespuesta('${p.id}','no')">NO</button>
+      </div>
+      <div id="campos-extra"></div>
+    `;
+    cont.innerHTML = html;
+
+    if(yaRespondido){
+      mostrarCamposExtra(p, yaRespondido.resp);
+    }
+  }
+
+  function elegirRespuesta(pasoId, resp){
+    if(!estado.respuestas[pasoId]) estado.respuestas[pasoId] = {};
+    estado.respuestas[pasoId].resp = resp;
+    guardarEstado();
+    renderEstaciones();
+    renderPregunta();
+  }
+
+  function idsCamposRequeridos(p, resp){
+    if(resp === 'no') return ['campo-mejora'];
+    if(resp === 'si' && p.tipo === 'evidencia' && p.camposSi) return p.camposSi.map(c => `campo-${c.id}`);
+    return [];
+  }
+
+  function camposCompletos(p, resp){
+    return idsCamposRequeridos(p, resp).every(id => {
+      const el = document.getElementById(id);
+      return el && el.value.trim().length > 0;
+    });
+  }
+
+  function actualizarBotonContinuar(p, resp){
+    const btn = document.getElementById('btn-continuar-el');
+    if(btn) btn.disabled = !camposCompletos(p, resp);
+  }
+
+  function mostrarCamposExtra(p, resp){
+    const cont = document.getElementById('campos-extra');
+    const r = estado.respuestas[p.id];
+    let html = "";
+
+    if(resp === 'no'){
+      html += `
+        <div class="campo-extra">
+          <label>Oportunidad de mejora *</label>
+          <textarea id="campo-mejora" placeholder="¿Qué podrías mejorar acá?" oninput="actualizarBotonContinuar(PASOS.find(x=>x.id==='${p.id}'),'no')">${r.mejora || ""}</textarea>
+        </div>
+      `;
+    } else if(p.tipo === 'evidencia' && p.camposSi){
+      p.camposSi.forEach(c => {
+        html += `
+          <div class="campo-extra">
+            <label>${c.label} *</label>
+            ${c.tag === 'input'
+              ? `<input type="text" id="campo-${c.id}" value="${r[c.id] || ""}" oninput="actualizarBotonContinuar(PASOS.find(x=>x.id==='${p.id}'),'si')">`
+              : `<textarea id="campo-${c.id}" oninput="actualizarBotonContinuar(PASOS.find(x=>x.id==='${p.id}'),'si')">${r[c.id] || ""}</textarea>`}
+          </div>
+        `;
+      });
+    }
+
+    html += `<button class="btn-continuar" id="btn-continuar-el" onclick="continuarPaso('${p.id}')">Continuar →</button>`;
+    cont.innerHTML = html;
+    actualizarBotonContinuar(p, resp);
+  }
+
+  function continuarPaso(pasoId){
+    const p = PASOS.find(x => x.id === pasoId);
+    const r = estado.respuestas[pasoId];
+
+    if(!camposCompletos(p, r.resp)){
+      actualizarBotonContinuar(p, r.resp);
+      return; // faltan campos obligatorios, no avanza
+    }
+
+    r.hora = horaAhora();
+
+    if(r.resp === 'no'){
+      r.mejora = document.getElementById('campo-mejora').value.trim();
+    } else if(p.tipo === 'evidencia' && p.camposSi){
+      p.camposSi.forEach(c => {
+        const el = document.getElementById(`campo-${c.id}`);
+        r[c.id] = el.value.trim();
+      });
+    }
+
+    estado.pasoActual++;
+    guardarEstado();
+    renderEstaciones();
+    renderPregunta();
+  }
+
+  function finalizarCapital(){
+    const monto = parseFloat(document.getElementById('campo-capital').value) || 0;
+    estado.respuestas['capital'] = { monto, hora: horaAhora() };
+    estado.pasoActual++;
+    guardarEstado();
+    guardarInteraccionEnHistorial();
+    renderEstaciones();
+    enviarAlEntrenador();
+    renderPregunta();
+    renderHistorial();
+  }
+
+  function rehacerRecorrido(){
+    estado.pasoActual = 0;
+    estado.respuestas = {};
+    guardarEstado();
+    renderEstaciones();
+    renderPregunta();
+  }
+
+  /* ===================== VIDEO DEL DÍA ===================== */
+  function leerCamposVideoDelDOM(){
+    // Guarda lo que la vendedora ya escribió antes de volver a dibujar la sección,
+    // así elegir Sí/No nunca borra lo tipeado.
+    const tCampo = document.getElementById('v-titulo');
+    const iCampo = document.getElementById('v-interrupcion');
+    const rCampo = document.getElementById('v-retencion');
+    const cCampo = document.getElementById('v-cta');
+    const motivoCampo = document.getElementById('v-motivo');
+    if(tCampo) estado.video.titulo = tCampo.value;
+    if(iCampo) estado.video.interrupcion = iCampo.value;
+    if(rCampo) estado.video.retencion = rCampo.value;
+    if(cCampo) estado.video.cta = cCampo.value;
+    if(motivoCampo) estado.video.motivoNoHecho = motivoCampo.value;
+  }
+
+  function renderVideo(){
+    const cont = document.getElementById('video-contenido');
+    const v = estado.video;
+
+    let extraSegunRespuesta = "";
+    if(v.hecho === 'no'){
+      extraSegunRespuesta = `
+        <div class="campo-extra">
+          <label>¿Por qué no se hizo hoy?</label>
+          <textarea id="v-motivo" placeholder="Contá brevemente el motivo...">${v.motivoNoHecho || ""}</textarea>
+        </div>
+      `;
+    } else if(v.hecho === 'si'){
+      extraSegunRespuesta = `
+        <div class="campo-extra">
+          <label>📲 ¿Se publicó en Instagram?</label>
+          <div class="video-sino">
+            <button class="si ${v.publicadoInstagram==='si'?'activo si':''}" onclick="marcarPublicadoInstagram('si')">SÍ</button>
+            <button class="no ${v.publicadoInstagram==='no'?'activo no':''}" onclick="marcarPublicadoInstagram('no')">NO</button>
+          </div>
+        </div>
+      `;
+    }
+
+    const ultimoEnvio = v.ultimoEnvioHora
+      ? `<div class="video-guardado-msg" style="margin-bottom:14px;">✅ Último envío al entrenador hoy: ${v.ultimoEnvioHora}</div>`
+      : "";
+
+    cont.innerHTML = `
+      ${ultimoEnvio}
+      <div class="campo-extra">
+        <label>Título del video</label>
+        <input type="text" id="v-titulo" value="${v.titulo}" placeholder="Ej: Cómo elegir el alimento correcto">
+      </div>
+      <div class="campo-extra">
+        <label>⚡ Patrón de interrupción — ¿Qué hiciste al comienzo para captar la atención?</label>
+        <textarea id="v-interrupcion">${v.interrupcion}</textarea>
+      </div>
+      <div class="campo-extra">
+        <label>👀 Patrón de retención — ¿Cómo generaste interés y deseo durante el video?</label>
+        <textarea id="v-retencion">${v.retencion}</textarea>
+      </div>
+      <div class="campo-extra">
+        <label>👉 Call to action — ¿Qué acción le pediste a quien lo vea?</label>
+        <textarea id="v-cta">${v.cta}</textarea>
+      </div>
+      <div class="campo-extra">
+        <label>🎬 ¿Hice el video del día? (se completa una vez por día)</label>
+        <div class="video-sino">
+          <button class="si ${v.hecho==='si'?'activo si':''}" onclick="marcarVideoHecho('si')">SÍ</button>
+          <button class="no ${v.hecho==='no'?'activo no':''}" onclick="marcarVideoHecho('no')">NO</button>
+        </div>
+      </div>
+      ${extraSegunRespuesta}
+      <button class="btn-guardar-video" onclick="enviarVideoAlEntrenador()">Enviar al entrenador</button>
+    `;
+  }
+
+  function marcarVideoHecho(valor){
+    leerCamposVideoDelDOM();
+    estado.video.hecho = valor;
+    guardarEstado();
+    renderVideo();
+  }
+
+  function marcarPublicadoInstagram(valor){
+    leerCamposVideoDelDOM();
+    estado.video.publicadoInstagram = valor;
+    guardarEstado();
+    renderVideo();
+  }
+
+  function enviarVideoAlEntrenador(){
+    const v = estado.video;
+    if(!v.hecho){
+      alert("Marcá si hiciste el video o no antes de enviar.");
+      return;
+    }
+    leerCamposVideoDelDOM();
+    v.ultimoEnvioHora = horaAhora();
+    guardarEstado();
+    guardarVideoEnHistorial();
+    renderHistorial();
+
+    let msg = `🐾 *BONES – Video del día*\n\n`;
+    msg += `🎬 ¿Hizo el video hoy? ${v.hecho === 'si' ? 'Sí' : 'No'}\n`;
+    if(v.hecho === 'si'){
+      msg += `Título: ${v.titulo || "(sin título)"}\n`;
+      msg += `⚡ Patrón de interrupción: ${v.interrupcion || "(sin completar)"}\n`;
+      msg += `👀 Patrón de retención: ${v.retencion || "(sin completar)"}\n`;
+      msg += `👉 Call to action: ${v.cta || "(sin completar)"}\n`;
+      msg += `📲 ¿Se publicó en Instagram? ${v.publicadoInstagram === 'si' ? 'Sí' : (v.publicadoInstagram === 'no' ? 'No' : '(sin marcar)')}\n`;
+    } else {
+      msg += `Motivo: ${v.motivoNoHecho || "(sin completar)"}\n`;
+    }
+
+    const numero = "5493704097249";
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+
+    renderVideo();
+  }
+
+  /* ===================== HISTORIAL ===================== */
+  function renderHistorial(){
+    const cont = document.getElementById('lista-historial');
+    const interacciones = JSON.parse(localStorage.getItem('bones_interacciones') || "[]");
+    const videos = JSON.parse(localStorage.getItem('bones_videos') || "[]");
+
+    // Unimos ventas y videos en una sola lista, ordenados del más reciente al más viejo
+    const items = [
+      ...interacciones.map(x => ({...x, esVideo:false})),
+      ...videos.map(x => ({...x, esVideo:true}))
+    ].sort((a,b) => (b.fecha+b.hora).localeCompare(a.fecha+a.hora)).slice(0, 30);
+
+    if(items.length === 0){
+      cont.innerHTML = `<div class="sin-historial">Todavía no hay ventas ni videos registrados.</div>`;
+      return;
+    }
+
+    const hoy = hoyStr();
+    const ayer = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+
+    cont.innerHTML = "";
+    items.forEach(item => {
+      const etiquetaFecha = item.fecha === hoy ? "Hoy" : (item.fecha === ayer ? "Ayer" : item.fecha.slice(5).split('-').reverse().join('/'));
+      const fila = document.createElement('div');
+      fila.className = 'fila-historial';
+
+      if(item.esVideo){
+        const instagramTxt = item.hecho === 'si' ? (item.publicadoInstagram === 'si' ? ' · 📲 IG ✅' : (item.publicadoInstagram === 'no' ? ' · 📲 IG ❌' : '')) : '';
+        fila.innerHTML = `<span class="etiqueta">🎥 ${etiquetaFecha} · ${item.hora}</span><span class="puntos">${item.hecho === 'si' ? '✅ Video hecho'+instagramTxt : '❌ No se hizo'}</span>`;
+      } else {
+        let puntosHtml = "";
+        PASOS.forEach(p => {
+          const r = item.respuestas[p.id];
+          let clase = '';
+          if(r){ clase = p.tipo === 'capital' ? 'si' : (r.resp === 'si' ? 'si' : 'no'); }
+          puntosHtml += `<span class="${clase}"></span>`;
+        });
+        const capital = item.respuestas['capital'] ? item.respuestas['capital'].monto : 0;
+        fila.innerHTML = `<span class="etiqueta">💰 ${etiquetaFecha} · ${item.hora}<br><span style="font-size:11px;color:var(--dorado);font-weight:700;">$${capital.toLocaleString('es-AR')}</span></span><span class="puntos">${puntosHtml}</span>`;
+      }
+      cont.appendChild(fila);
+    });
+  }
+
+  /* ===================== ENVIAR RECORRIDO AL ENTRENADOR ===================== */
   function enviarAlEntrenador(){
-    const datos = recalcularTodo();
-    const mejoras = obtenerMejoras();
-    const ticket = document.getElementById('ticket').value.trim();
-    const vc = ventaCruzada === true ? "Sí" : ventaCruzada === false ? "No" : "(sin marcar)";
+    const siCount = Object.values(estado.respuestas).filter(r => r.resp === 'si').length;
+    const capital = estado.respuestas['capital'] ? estado.respuestas['capital'].monto : 0;
 
-    let msg = `🐾 *BONES – Seguimiento diario AIDAP*\n\n`;
-    msg += `*Resultados por etapa:*\n`;
-    pasos.forEach(p => {
-      msg += `${nombresBonitos[p]}: ${datos.resultados[p]}%\n`;
-      msg += `  ↳ Oportunidad de mejora: ${mejoras[p]}\n`;
+    let msg = `🐾 *BONES – KPI Vendedora*\n\n`;
+    msg += `*Conductas cumplidas: ${siCount} / 6*\n`;
+    PASOS.filter(p => p.tipo !== 'capital').forEach(p => {
+      const r = estado.respuestas[p.id];
+      if(!r){ msg += `${p.nombre}: (sin registrar)\n`; return; }
+      msg += `${p.nombre} (${r.hora || ""}): ${r.resp === 'si' ? '✅' : '❌'}`;
+      if(r.resp === 'no' && r.mejora) msg += ` — Mejora: ${r.mejora}`;
+      msg += `\n`;
     });
-    msg += `\n📈 *Experiencia Bones del día: ${datos.promedio}%*\n\n`;
-    msg += `📊 *Indicadores:*\n`;
-    msg += `Clientes que ingresaron: ${datos.ingresaron}\n`;
-    msg += `Clientes que compraron: ${datos.compraron}\n`;
-    msg += `Conversión: ${datos.conversion}%\n`;
-    msg += `Venta cruzada realizada: ${vc}\n`;
-    if(ticket) msg += `Ticket promedio: $${ticket}\n`;
-// Enviar datos a la planilla de Google
+    msg += `\n💵 *Capital obtenido en esta venta: $${capital.toLocaleString('es-AR')}*\n`;
+
     const URL_PLANILLA = "https://script.google.com/macros/s/AKfycbz2_LaVWz3xA54rIXSM9AY1Fnya44-15DaiAQW9RzPVBVaCqcJGaqCo_HzjbuTl41cy/exec";
     fetch(URL_PLANILLA, {
       method: "POST",
       mode: "no-cors",
       body: JSON.stringify({
-        atencion: datos.resultados.atencion,
-        interes: datos.resultados.interes,
-        deseo: datos.resultados.deseo,
-        accion: datos.resultados.accion,
-        postventa: datos.resultados.postventa,
-        experiencia: datos.promedio,
-        ingresaron: datos.ingresaron,
-        compraron: datos.compraron,
-        conversion: datos.conversion,
-        ventaCruzada: vc,
-        ticket: ticket || "",
-        mejoraAtencion: mejoras.atencion,
-        mejoraInteres: mejoras.interes,
-        mejoraDeseo: mejoras.deseo,
-        mejoraAccion: mejoras.accion,
-        mejoraPostventa: mejoras.postventa
+        tipo: "kpi_vendedora",
+        fecha: estado.fecha,
+        siCount, capital,
+        respuestas: estado.respuestas
       })
     });
+
     const numero = "5493704097249";
     const url = `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`;
     window.open(url, '_blank');
   }
 
-  recalcularTodo();
+  /* ===================== INICIO ===================== */
+  renderEstaciones();
+  renderPregunta();
+  renderVideo();
+  renderHistorial();
 </script>
 
 </body>

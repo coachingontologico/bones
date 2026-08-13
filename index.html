@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bones · INDICADORES</title>
+<title>Bones · KPI Vendedora</title>
 <style>
   :root{
     --verde-oscuro:#0f3d2e;
@@ -362,6 +362,32 @@
     padding:10px 0;
   }
 
+  /* Archivos importantes */
+  .archivos-wrap{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+  }
+  .btn-archivo{
+    flex:1;
+    background:#fff;
+    border:1px solid var(--hueso-suave);
+    color:var(--verde-oscuro);
+    padding:14px 6px;
+    font-size:12px;
+    font-weight:700;
+    border-radius:12px;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(15,61,46,0.08);
+    transition:all .15s;
+    text-align:center;
+  }
+  .btn-archivo:hover{
+    background:var(--verde-oscuro);
+    color:var(--hueso);
+    transform:translateY(-2px);
+  }
+
   footer{
     text-align:center;
     font-size:12px;
@@ -404,6 +430,12 @@
     <div id="lista-historial"></div>
   </section>
 
+  <div class="archivos-wrap">
+    <button class="btn-archivo" onclick="window.open('https://www.google.com','_blank')">Archivos importantes</button>
+    <button class="btn-archivo" onclick="window.open('https://www.google.com','_blank')">Archivos importantes</button>
+    <button class="btn-archivo" onclick="window.open('https://www.google.com','_blank')">Archivos importantes</button>
+  </div>
+
 </main>
 
 <footer>
@@ -417,7 +449,7 @@
       id: "local",
       nombre: "Local",
       emoji: "🏪",
-      texto: "¿El local está preparado para recibir al cliente?",
+      texto: "¿El local está preparado para llamar la atención?",
       desc: "Vidriera limpia · piso limpio · productos ordenados y atractivos · cartelería visible.",
       tipo: "simple"
     },
@@ -446,7 +478,7 @@
       tipo: "evidencia",
       camposSi: [
         {id:"nombreMascota", label:"¿Cuál es el nombre de la mascota?", tag:"input"},
-        {id:"relacion", label:"¿Cómo relacionaste el producto con la mascota y el cliente", tag:"textarea"}
+        {id:"relacion", label:"¿Cómo relacionaste el producto con ella?", tag:"textarea"}
       ]
     },
     {
@@ -454,7 +486,7 @@
       nombre: "Floreo",
       emoji: "💬",
       texto: "¿Utilicé floreo verbal para generar cercanía?",
-      desc: "Hice preguntas sobre la mascota · saqué temas de conversación · mostré interés en la personay mascota.",
+      desc: "Hice preguntas sobre la mascota · saqué temas de conversación · mostré interés genuino.",
       tipo: "evidencia",
       camposSi: [
         {id:"comoFloreo", label:"¿Cómo utilizaste el floreo verbal?", tag:"textarea"}
